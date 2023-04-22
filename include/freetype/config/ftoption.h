@@ -109,7 +109,8 @@ FT_BEGIN_HEADER
    * ```
    *
    */
-#define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+/* ANDROID: disabled */
+/* #define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES                       */
 
 
   /**************************************************************************
@@ -195,7 +196,7 @@ FT_BEGIN_HEADER
    *   Define this macro if you want to enable this 'feature'.  See also the
    *   macro `FT_CONFIG_OPTION_SYSTEM_ZLIB` below.
    */
-#define FT_CONFIG_OPTION_USE_ZLIB
+/* #define FT_CONFIG_OPTION_USE_ZLIB */
 
 
   /**************************************************************************
@@ -273,6 +274,7 @@ FT_BEGIN_HEADER
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
    */
+  /* ANDROID: enabled */
 /* #define FT_CONFIG_OPTION_USE_PNG */
 
 
@@ -393,7 +395,8 @@ FT_BEGIN_HEADER
    * incrementally as the document is parsed, such as the Ghostscript
    * interpreter for the PostScript language.
    */
-#define FT_CONFIG_OPTION_INCREMENTAL
+/* ANDROID: disabled */
+/* #define FT_CONFIG_OPTION_INCREMENTAL                                  */
 
 
   /**************************************************************************
@@ -706,7 +709,10 @@ FT_BEGIN_HEADER
    * https://www.microsoft.com/typography/cleartype/truetypecleartype.aspx
    */
 /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  1         */
-#define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2
+
+/* ANDROID: disabled */
+/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2         */
+
 /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  ( 1 | 2 ) */
 
 
