@@ -4,7 +4,7 @@
  *
  *   User-selectable configuration macros (specification only).
  *
- * Copyright (C) 1996-2021 by
+ * Copyright (C) 1996-2023 by
  * David Turner, Robert Wilhelm, and Werner Lemberg.
  *
  * This file is part of the FreeType project, and may only be used,
@@ -109,8 +109,7 @@ FT_BEGIN_HEADER
    * ```
    *
    */
-/* ANDROID: disabled */
-/* #define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES                       */
+#define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
 
 
   /**************************************************************************
@@ -196,7 +195,7 @@ FT_BEGIN_HEADER
    *   Define this macro if you want to enable this 'feature'.  See also the
    *   macro `FT_CONFIG_OPTION_SYSTEM_ZLIB` below.
    */
-/* #define FT_CONFIG_OPTION_USE_ZLIB */
+#define FT_CONFIG_OPTION_USE_ZLIB
 
 
   /**************************************************************************
@@ -220,6 +219,10 @@ FT_BEGIN_HEADER
    *   If you use a build system like cmake or the `configure` script,
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
+   *
+   *   If you use the GNU make build system directly (that is, without the
+   *   `configure` script) and you define this macro, you also have to pass
+   *   `SYSTEM_ZLIB=yes` as an argument to make.
    */
 /* #define FT_CONFIG_OPTION_SYSTEM_ZLIB */
 
@@ -270,7 +273,6 @@ FT_BEGIN_HEADER
    *   options set by those programs have precedence, overwriting the value
    *   here with the configured one.
    */
-  /* ANDROID: enabled */
 /* #define FT_CONFIG_OPTION_USE_PNG */
 
 
@@ -391,8 +393,7 @@ FT_BEGIN_HEADER
    * incrementally as the document is parsed, such as the Ghostscript
    * interpreter for the PostScript language.
    */
-/* ANDROID: disabled */
-/* #define FT_CONFIG_OPTION_INCREMENTAL                                  */
+#define FT_CONFIG_OPTION_INCREMENTAL
 
 
   /**************************************************************************
@@ -460,9 +461,9 @@ FT_BEGIN_HEADER
    *   while compiling in 'release' mode):
    *
    *   ```
-   *     _af_debug_disable_horz_hints
-   *     _af_debug_disable_vert_hints
-   *     _af_debug_disable_blue_hints
+   *     af_debug_disable_horz_hints_
+   *     af_debug_disable_vert_hints_
+   *     af_debug_disable_blue_hints_
    *   ```
    *
    *   Additionally, the following functions provide dumps of various
@@ -479,7 +480,7 @@ FT_BEGIN_HEADER
    *   As an argument, they use another global variable:
    *
    *   ```
-   *     _af_debug_hints
+   *     af_debug_hints_
    *   ```
    *
    *   Please have a look at the `ftgrid` demo program to see how those
@@ -528,6 +529,20 @@ FT_BEGIN_HEADER
 
   /**************************************************************************
    *
+   * OpenType SVG Glyph Support
+   *
+   *   Setting this macro enables support for OpenType SVG glyphs.  By
+   *   default, FreeType can only fetch SVG documents.  However, it can also
+   *   render them if external rendering hook functions are plugged in at
+   *   runtime.
+   *
+   *   More details on the hooks can be found in file `otsvg.h`.
+   */
+#define FT_CONFIG_OPTION_SVG
+
+
+  /**************************************************************************
+   *
    * Error Strings
    *
    *   If this macro is set, `FT_Error_String` will return meaningful
@@ -569,12 +584,12 @@ FT_BEGIN_HEADER
   /**************************************************************************
    *
    * Define `TT_CONFIG_OPTION_POSTSCRIPT_NAMES` if you want to be able to
-   * load and enumerate the glyph Postscript names in a TrueType or OpenType
+   * load and enumerate Postscript names of glyphs in a TrueType or OpenType
    * file.
    *
-   * Note that when you do not compile the 'psnames' module by undefining the
-   * above `FT_CONFIG_OPTION_POSTSCRIPT_NAMES`, the 'sfnt' module will
-   * contain additional code used to read the PS Names table from a font.
+   * Note that if you do not compile the 'psnames' module by undefining the
+   * above `FT_CONFIG_OPTION_POSTSCRIPT_NAMES` macro, the 'sfnt' module will
+   * contain additional code to read the PostScript name table from a font.
    *
    * (By default, the module uses 'psnames' to extract glyph names.)
    */
@@ -691,10 +706,7 @@ FT_BEGIN_HEADER
    * https://www.microsoft.com/typography/cleartype/truetypecleartype.aspx
    */
 /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  1         */
-
-/* ANDROID: disabled */
-/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2         */
-
+#define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2
 /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  ( 1 | 2 ) */
 
 
@@ -725,6 +737,24 @@ FT_BEGIN_HEADER
    * also.  This has many similarities to Type~1 Multiple Masters support.
    */
 #define TT_CONFIG_OPTION_GX_VAR_SUPPORT
+
+
+  /**************************************************************************
+   *
+   * Define `TT_CONFIG_OPTION_NO_BORING_EXPANSION` if you want to exclude
+   * support for 'boring' OpenType specification expansions.
+   *
+   *   https://github.com/harfbuzz/boring-expansion-spec
+   *
+   * Right now, the following features are covered:
+   *
+   *   - 'avar' version 2.0
+   *
+   * Most likely, this is a temporary configuration option to be removed in
+   * the near future, since it is assumed that eventually those features are
+   * added to the OpenType standard.
+   */
+/* #define TT_CONFIG_OPTION_NO_BORING_EXPANSION */
 
 
   /**************************************************************************
@@ -1008,8 +1038,8 @@ FT_BEGIN_HEADER
 #error "Invalid CFF darkening parameters!"
 #endif
 
-FT_END_HEADER
 
+FT_END_HEADER
 
 #endif /* FTOPTION_H_ */
 
